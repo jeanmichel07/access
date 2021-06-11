@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+        <div style="width: 5%; float: left">
+            <a class="btn btn-sm btn-primary" href="{{ path('newClient') }}" style="z-index: 9999 !important;">Nouveaux Client</a>
+        </div>
+        <div  style="width: 90%; text-align: right; float: right">
+            <input type="text" class="segment" placeholder="Segment">
+            <input type="text" class="vendeur" placeholder="Vendeur">
+            <input type="text" class="Statu" placeholder="Statut">
+            <input type="text" class="client" placeholder="Client">
+        </div>
+<br>
+<br>
+<br>
+    <div class="list">
+        {% if client|length > 0 %}
+            <table class="responsive-table">
+                <thead>
+                <tr>
+                <th>Raison Social</th><th>Nom et prénom</th><th>Contact</th><th>Consommation global éléctricité</th><th>Consommation globale gaz</th>
+                <th>Statut</th>
+                    <th>Commercial</th>
+                    <th>Segmentation</th>
+                    <th></th>
+            </tr>
+                </thead>
+                <tbody class="tableBody">
+                {% for c in client|reverse %}
+                    <tr>
+                        <td>{{ c.raisonSocial }}</td>
+                        <td>{{ c.nomSignataire~' '~c.prenomSignataire }}</td>
+                        <td>{{ c.telephone }}</td>
+                        {% set per = 0 %}
+                        {% for p in c.perimetreElectricites %}
+                            {% set per =  per + p.total %}
+                        {% endfor %}
+                        <td>{{ per~' Mwh' }}</td>
+                        {% set perza = 0 %}
+                        {% for p in c.permetreGazs %}
+                            {% set perza =  perza + p.CAR %}
+                        {% endfor %}
+                        <td>{{ perza~' Mwh' }}</td>
+                        <td>{{ c.statut }}</td>
+                        <td>{{ c.vendeur is null ? '' :c.vendeur.nom }}</td>
+                        <td>
+                            {% for p in c.perimetreElectricites %}
+                                <span>{{ p.segmentation.nom~',' }}</span>
+                            {% else %}
+                                <i>Aucun perimetre éléctricité</i>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{ path('editUser',{id: c.id}) }}">Client</a>
+                                    <a class="dropdown-item" href="{{ path('perimetreClient',{id: c.id}) }}">Périmètres</a>
+                                    <a class="dropdown-item" href="{{ path('historique',{id:c.id}) }}">Historiques</a>
+                                    <a class="dropdown-item" href="{{ path('newOffreElec',{id:c.id}) }}">Créer une opportunité éléctricité</a>
+                                    <a class="dropdown-item" href="{{ path('newOffreGaz',{id:c.id}) }}">Créer une opportunité Gaz nature</a>
+                                    {% set i = 1 %}
+                                    {% for p in c.perimetreElectricites %}
+                                    {% else %}
+                                        {% set i = 0 %}
+                                    {% endfor %}
+                                    {% if i == 1 %}
+                                    <a class="dropdown-item" href="{{ path('editBudget',{id:c.id, perim: 'elec'}) }}">Budget en éléctrcicté</a>
+                                    {% endif %}
+                                    {% set j = 1 %}
+                                    {% for p in c.permetreGazs %}
+                                    {% else %}
+                                        {% set j = 0 %}
+                                    {% endfor %}
+                                    {% if j == 1 %}
+                                    <a class="dropdown-item" href="{{ path('editBudget',{id:c.id, perim: 'gaz'}) }}">Budget en gaz naturel</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+        </table>
+        {% else %}
+            <p style="color: grey"><i>Aucun client</i></p>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/js/filer.js') }}"></script>
+{% endblock %}

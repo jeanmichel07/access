@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Nouveau Vendeur</h2>
+    <hr>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-6">{{ form_row(form.nom) }}</div>
+        <div class="col-6">{{ form_row(form.prenom) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-6">{{ form_row(form.fonction) }}</div>
+        <div class="col-6">{{ form_row(form.contact) }}</div>
+    </div>
+    {{ form_row(form.email) }}
+    <input type="submit" value="Enregistrer" class="btn btn-sm btn-info">
+    {{ form_end(form) }}
+
+{% endblock %}

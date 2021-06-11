@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <label>Client : {{ client.nomSignataire~' '~client.prenomSignataire }}</label><hr>
+    <h3>Opportunité éléctricité</h3>
+    <div>
+    </div>
+    {% if elec|length >0 %}
+        <table class="responsive-table">
+            <thead>
+            <tr>
+            <th>Nombre de fournisseur</th>
+            <th>Date de création</th>
+            <th>Segmentation</th>
+            <th>Statut</th>
+            <th></th>
+        </tr>
+            </thead>
+        {% for e in elec %}
+            <tr>
+                <td>{{ e.nbrOffre }}</td>
+                <td>{{ e.createdAt|date('d-m-y') }}</td>
+                <td>{{ e.segmentation }}</td>
+                <td>{{ e.status }}</td>
+                <td><a class="btn btn-sm btn-primary" href="{{ path('detailhistorique',{id:e.id}) }}">Détails</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p style="color: grey"><i>Aucun Opportunité éléctricité</i></p>
+    {% endif %}
+    <hr>
+    <h3>Opportunité Gaz naturel</h3>
+    <div>
+    </div>
+    {% if gaz|length > 0 %}
+        <table class="responsive-table">
+            <thead>
+            <tr>
+            <th>Nombre de fournisseur</th>
+            <th>Date de création</th>
+            <th>Profil</th>
+            <th>Statut</th>
+            <th></th>
+        </tr>
+            </thead>
+        {% for e in gaz %}
+            <tr>
+                <td>{{ e.nbrOffre }}</td>
+                <td>{{ e.createdAt|date('d-m-y') }}</td>
+                <td>{{ e.profil }}</td>
+                <td>{{ e.status }}</td>
+                <td><a class="btn btn-sm btn-primary" href="{{ path('detailhistoriquegaz',{id:e.id}) }}">Détails</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p style="color: grey"><i>Aucun Opportunité gaz naturel</i></p>
+    {% endif %}
+    <a href="javascript:history.back();" class="btn btn-sm btn-warning">Retour</a>
+{% endblock %}

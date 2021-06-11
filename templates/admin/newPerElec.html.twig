@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if client.perimetreElectricites|length < client.nbrSiteElec %}
+    <h2>Périmètre éléctricité :  {{ client.perimetreElectricites|length + 1 }}/{{ client.nbrSiteElec }}</h2>
+    <hr>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-6">{{ form_row(form.dateFourniture) }}</div>
+        <div class="col-6">{{ form_row(form.PDL) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">{{ form_row(form.seg) }}</div>
+        <div class="col-6">{{ form_row(form.segmentation) }}</div>
+    </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.nomPtLivraison) }}
+            </div>
+        </div>
+    <hr>
+        <h5>Puissances</h5>
+        <div class="row">
+            <div class="col-12">{{ form_row(form.psPte) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.psHPH) }}</div>
+            <div class="col-6">{{ form_row(form.psHCH) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.psHPE) }}</div>
+            <div class="col-6">{{ form_row(form.psHCE) }}</div>
+        </div>
+    <hr>
+    <h5>Consommations</h5>
+    <div class="row">
+        <div class="col-12">{{ form_row(form.pte) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-6">{{ form_row(form.HPH) }}</div>
+        <div class="col-6">{{ form_row(form.HCH) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-6">{{ form_row(form.HPE) }}</div>
+        <div class="col-6">{{ form_row(form.HCE) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-6"><input type="submit" class="btn btn-sm btn-primary" value="Enregistrer et passer aux site suivant"></div>
+    </div>
+    {{ form_end(form) }}
+        {% else %}
+            <h2>Périmètre éléctricité :  {{ client.perimetreElectricites|length }}/{{ client.nbrSiteElec }}</h2>
+            <hr>
+            <form action="" method="POST">
+                <div class="form-group">
+                    <label>
+                        Objectif du budget cible du périmètre électricité
+                    </label>
+                    <input type="number" name="objectif" placeholder="00.00&euro;" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Stratégique commercial
+                    </label>
+                    <textarea class="form-control" name="strat" rows="3" placeholder="Ecrivez ici..."></textarea>
+                </div>
+                <input name="btnOb" type="submit" class="btn btn-sm btn-warning" value="Terminer">
+            </form>
+        {% endif %}
+{% endblock %}

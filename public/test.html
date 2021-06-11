@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tiffani</title>
+        <style>
+            .z{
+                color: white;
+                background-color: #0c5460;
+                padding-bottom: 10px;
+                padding-top: 10px;
+                width: 50%;
+                text-align: center;
+                border-radius: 10px;
+                display: none;
+                float: right;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js">
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#titre").click(function () {
+                    $(".z").toggle()
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <div class="entete">
+            <h1 id="titre">Facebook</h1>
+        </div>
+        <div class="contenu">
+            <p class="z">
+                bla blea bla bleabla bleabla bleabla bleabla bleabla bleabla bleabla bleabla bleabla blea
+            </p>
+        </div>
+        <div class="footer">
+            <img style="border-radius: 200px" width="50%" src="https://cdn.futura-sciences.com/buildsv6/images/wide1920/8/8/6/886a1f5f0b_84113_fs-01-13668997695-1b11821209-k.jpg">
+        </div>
+    </body>
+</html>

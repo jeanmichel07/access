@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SettingController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats-t">
+                <div class="card-header card-header-warning card-header-icon">
+
+                    <p class="card-category"></p>
+                    <h5 class="card-title"><a href="{{ path('index_comptage') }}">Composante de comptage</a>
+                    </h5>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats-t">
+                <div class="card-header card-header-success card-header-icon">
+
+                    <p class="card-category"></p>
+                    <h5 class="card-title"><a href="{{ path('index_gestion') }}">Composante de gestion</a></h5>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats-t">
+                <div class="card-header card-header-danger card-header-icon">
+
+                    <p class="card-category"></p>
+                    <h5 class="card-title"><a href="{{ path('indexPartFixe') }}">Composante de soutirage part fixe</a></h5>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats-t">
+                <div class="card-header card-header-info card-header-icon">
+                    <p class="card-category"></p>
+                    <h5 class="card-title"><a href="{{ path('indexPartVariable') }}">Composante de soutirage part variable</a></h5>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

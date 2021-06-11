@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Composante de soutirage part variable</h2>
+    <div class="list">
+        <table class="responsive-table">
+            <thead>
+            <tr>
+                <th>FTA</th>
+                <th>Pte</th>
+                <th>HPH</th>
+                <th>HCH</th>
+                <th>HPE</th>
+                <th>HCE</th>
+                <th></th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for c in partVariable %}
+                <tr>
+                    <td>{{ c.segmentation.nom }}</td>
+                    <td>{{ c.pte }}</td>
+                    <td>{{ c.hph }}</td>
+                    <td>{{ c.hch }}</td>
+                    <td>{{ c.hpe }}</td>
+                    <td>{{ c.hce }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="{{ path('editPartVariable', {id:c.id}) }}" style="text-transform: capitalize">éditer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h3>{{ 'Fournisseur :'~offrgaz.fournisseur }}</h3>
+    <div class="list">
+        <table class="table">
+            <tr class="table-light">
+                <th>Prix abonnement/an</th><th>Prix Gaz</th><th>TQA</th><th>CEEH</th><th>CTA</th><th>Budget HTT</th>
+            </tr>
+            {% for o in offrgaz.detailleOffreGazs|reverse %}
+                <tr>
+                    <td>{{ o.prAbonnParAn }}</td>
+                    <td>{{ o.prGaz }}</td>
+                    <td>{{ o.tqa }}</td>
+                    <td>{{ o.cee }}</td>
+                    <td>{{ o.cta }}</td>
+                    <td>{{ o.budgetTTC }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

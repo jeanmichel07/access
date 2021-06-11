@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+    <h3>Périmètre éléctricité</h3>
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th>DDF</th>
+            <th>PDL</th>
+            <th>Nom point de livraison</th>
+            <th>Ségmentation</th>
+            <th>Conso. PTE</th>
+            <th>Conso. HPH</th>
+            <th>Conso. HCH</th>
+            <th>Conso. HPE</th>
+            <th>Conso. HCE</th>
+            <th>Conso. Total</th>
+        </tr>
+        </thead>
+        {% for p in client.perimetreElectricites %}
+        <tr>
+            <td>{{ p.dateFourniture|date('d-m-y') }}</td>
+            <td>{{ p.PDL }}</td>
+            <td>{{ p.nomPtLivraison }}</td>
+            <td>{{ p.segmentation }}</td>
+            <td>{{ p.pte }}</td>
+            <td>{{ p.HPH }}</td>
+            <td>{{ p.HCH }}</td>
+            <td>{{ p.HPE }}</td>
+            <td>{{ p.HCE }}</td>
+            <td>{{ p.total }}</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: rgba(121, 121, 121, 0.5); text-align: right; color: white; font-size: 15px; font-weight: bold">Puissance => </td>
+            <td>{{ p.psPte }}</td>
+            <td>{{ p.psHPH }}</td>
+            <td>{{ p.psHCH }}</td>
+            <td>{{ p.psHPE }}</td>
+            <td>{{ p.psHCE }}</td>
+            <td>-</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    <h3>Périmètre gaz</h3>
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th>DDF</th>
+            <th>PCE</th>
+            <th>Nom point de livraison</th>
+            <th>Profil</th>
+            <th>Tarif de distribution</th>
+            <th>CAR</th>
+        </tr>
+        </thead>
+        {% for g in client.permetreGazs %}
+            <tr>
+                <td>{{ g.dateFourniture|date('d-m-y') }}</td>
+                <td>{{ g.PCE }}</td>
+                <td>{{ g.nomPtLivraison }}</td>
+                <td>{{ g.profil }}</td>
+                <td>{{ g.tarifDistribution }}</td>
+                <td>{{ g.CAR }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="javascript:history.back();" class="btn btn-sm btn-warning">Retour</a>
+{% endblock %}

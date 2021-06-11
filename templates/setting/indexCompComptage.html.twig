@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Composante de comptage</h2>
+    <div class="list">
+            <table class="responsive-table">
+                <thead>
+                <tr>
+                    <th>FTA</th><th>Valeur</th><th></th>
+                </tr>
+                </thead>
+                {% for c in com %}
+                    <tr>
+                        <td>{{ c.segmentation.nom }}</td>
+                        <td>{{ c.value }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning" href="{{ path('edit_comptage', {id: c.id}) }}" style="text-transform: capitalize">éditer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+    </div>
+{% endblock %}

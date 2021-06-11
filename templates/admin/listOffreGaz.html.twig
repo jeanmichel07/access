@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <br><a class="btn btn-sm btn-primary" href="{{ path('newOffreGaz') }}">Nouvelle Opportunite Gaz naturel</a><hr>
+    <div class="list">
+        <table class="table">
+            <tr class="table-light">
+                <th>Founisseur</th><th>Nbr site</th><th></th>
+            </tr>
+            {% for o in offregaz|reverse %}
+                <tr>
+                    <td>{{ o.fournisseur }}</td>
+                    <td>{{ o.detailleOffreGazs|length }}</td>
+                    <td><a href="{{ path('showdetailleOffreGazs',{id:o.id}) }}" class="btn btn-sm btn-info">Detailles </a> <a href="#" class="btn btn-sm btn-primary">Proposer </a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

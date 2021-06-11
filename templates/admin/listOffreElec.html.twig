@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="list">
+        <table class="table">
+            <tr class="table-light">
+                <th>Founisseur</th><th>Segmentation</th><th>Nbr site</th><th></th>
+            </tr>
+            {% for o in listOffreElec|reverse %}
+                <tr>
+                    <td>{{ o.fournisseur }}</td>
+                    <td>{{ o.segmentation }}</td>
+                    <td>{{ o.detailOffreElecs|length }}</td>
+                    <td><a href="{{ path('showdetailleOffreElec',{id:o.id}) }}" class="btn btn-sm btn-info">Detailles </a> <a href="#" class="btn btn-sm btn-primary">Proposer </a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

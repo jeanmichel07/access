@@ -1,0 +1,60 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+    {% set i = 0 %}
+    <div class="row">
+        <div class="col-12">
+            {% for d in gaz.detailleOffreGazs %}
+                <h4>Offre {{ i+1 }}: Fournisseur {{ gaz.fournisseur[i] }}</h4>
+                {% set i =i+1 %}
+                <table class="responsive-table">
+                    <thead>
+                    <tr>
+                        <th>Prix abonnement /an</th>
+                        <th>Prix Gaz</th>
+                        <th>TQA</th>
+                        <th>CEE/MwH</th>
+                        <th>CTA/mois</th>
+                        <th>Durée en mois</th>
+                        <th style="background-color: rgba(65,105,225,0.6); color: white">Budget HTT</th>
+                        <th style="background-color: rgba(65,105,225,0.6); color: white">Budget TTC</th>
+                        <th style="background-color: rgb(100,0,250)">Budget cible</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>{{ d.budgetGazs.last.abonnementParAn }}</td>
+                        <td>{{ d.prGaz }}</td>
+                        <td>{{ d.tqa }}</td>
+                        <td>{{ d.cee }}</td>
+                        <td>{{ d.cta }}</td>
+                        <td>{{ d.dureEnMois }}</td>
+                        <td>{{ d.budgetGazs.last.TOTALBUDGETANNUELTTCouCTRS }}</td>
+                        <td>{{ d.budgetGazs.last.budgetTTC }}</td>
+                        <td>{{ objectif }}</td>
+                    </tr>
+                </table>
+                {% if d.statut == 'accepte' %}
+                <p><b>Statut :</b> <i style="font-weight: bold">Offre accepté</i></p>
+                {% elseif d.statut == 'decline' %}
+                    <p><b>Statut :</b> <i style="font-weight: bold">Offre decliné</i></p>
+                {% else %}
+                <a href="{{ path('validereGaz',{id:d.id}) }}" class="btn btn-sm btn-primary">Accepter</a>
+                <a href="{{ path('declineGaz',{id:d.id}) }}" class="btn btn-sm btn-secondary">Decliner</a><hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <table class="table">
+                <tr><th><img width="25px" src="/imagesSites/flame.png">Gaz Naturel</th></tr>
+                <tr><td>CAL-22</td><td>{{ info.cal22 }}</td></tr>
+                <tr><td>CAL-23</td><td>{{ info.cal23 }}</td></tr>
+                <tr><td>CAL-21</td><td>{{ info.cal24 }}</td></tr>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <a href="javascript:history.back();" class="btn btn-sm btn-warning">Retour</a>
+{% endblock %}

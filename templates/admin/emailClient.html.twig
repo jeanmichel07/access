@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <img src="{{ url }}imagesSites/logo.png" width="75px">
+    </div>
+    <div>
+        <p>Bonjour {{ prenom }} {{ nom }},</p>
+        <p>Nous avons le plaisir de vous confirmer la création de votre plateforme d’achat d’énergie.</p>
+        <p>Vos identifiants pour y accéder sont les suivant :</p>
+    </div>
+    <table>
+        <tr><td>Lien :</td><td><a href="{{ url }}">{{ url }}</a></td></tr>
+        <tr><td>Email : </td><td>{{ email }}</td></tr>
+    </table>
+    <p>
+        Pour activer votre Espace Client et choisir un mot de passe, cliquez sur le bouton ci-dessous :<br><br><br>
+
+        <a style="border: #0c5460 solid 1px; background-color: #1c7430; padding: 12px; text-decoration: none; color: white; font-weight: bold; margin-left: 100px" href="{{ urlActive }}">ACTIVER MON ESPACE CLIENT</a>
+<br><br><br>
+    </p>
+    <p>En activant votre espace client, vous validez les Conditions Générales d'Utilisation que vous pourrez consulter tout au long du parcours de première connexion.</p>
+    <p>
+        Depuis votre Espace vous pourrez :
+        <ul>
+            <li>Consulter votre périmètre électricité et gaz naturel</li>
+            <li>Consulter votre budget ou prix cible</li>
+            <li>Consulter les opportunités marché selon votre cahier des charges</li>
+            <li>Accepter ou décliner les opportunités</li>
+            <li>Visualiser votre historique d’opportunité</li>
+        </ul>
+    </p>
+<p>
+    À très bientôt sur votre Espace Client !
+</p>
+<p>ACCESS ENERGIES vous remercie de votre confiance.</p>
+<h3>L’énergies est un budget réduisons-le !</h3>
+</body>
+</html>

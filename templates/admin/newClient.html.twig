@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+    <div class="f">
+        <h2>Nouveaux client</h2>
+        <hr>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">{{ form_row(form.raisonSocial) }}</div>
+            <div class="col-6">{{ form_row(form.fonctionSignataire) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.nomSignataire) }}</div>
+            <div class="col-6">{{ form_row(form.prenomSignataire) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.telephone) }}</div>
+            <div class="col-6">{{ form_row(form.email) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.vendeur) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Nombre de site dans périmètre électricité</label>
+                <table>
+                    <tr>
+                        <td style="background-color: rgba(135,206,250, 0.1); padding-top: 16px; width: 100%">{{ form_row(form.nbrSiteElec, {'attr':{'class':'foo'}}) }}</td>
+                        <td style="background-color: rgba(135,206,250, 0.1);"><input name="elec" type="submit" value="Définir les périmètres électricité" class="btn btn-sm btn-warning"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <label>Nombre de site dans périmètre gaz naturel</label>
+                <table>
+                    <tr>
+                        <td style="background-color: rgba(135,206,250, 0.1); padding-top: 16px; width: 100%">{{ form_row(form.nbrSiteGaz, {'attr':{'class':'foo'}}) }}</td>
+                        <td style="background-color: rgba(135,206,250, 0.1);"><input type="submit" value="Définir les périmètres gaz naturel" class="btn btn-sm btn-info"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        {{ form_end(form) }}
+        <hr>
+        <input disabled type="submit" class="btn btn-warning" value="Envoyer email de creation de compte">
+    </div>
+
+    <br>
+    <br>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if client.permetreGazs|length < client.nbrSiteGaz %}
+        <h2>Périmètre gaz naturel :  {{ client.permetreGazs|length + 1 }}/{{ client.nbrSiteGaz }}</h2>
+        <hr>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">{{ form_row(form.dateFourniture) }}</div>
+            <div class="col-6">{{ form_row(form.PCE) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.nomPtLivraison) }}</div>
+            <div class="col-6">{{ form_row(form.CAR) }}</div>
+        </div>
+        <hr>
+        <h5>Acheminement :</h5>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.profil) }}</div>
+            <div class="col-6">{{ form_row(form.tarifDistribution) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6"><input type="submit" class="btn btn-sm btn-primary" value="Enregistrer et passer aux site suivant"></div>
+        </div>
+        {{ form_end(form) }}
+    {% else %}
+        <h2>Périmètre gaz naturel :  {{ client.permetreGazs|length }}/{{ client.nbrSiteGaz }}</h2>
+        <hr>
+        <form action="" method="POST">
+            <div class="form-group">
+                <label>
+                    Objectif du budget cible du périmètre gaz naturel
+                </label>
+                <input type="number" name="objectif" placeholder="00.00&euro;" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>
+                    Stratégique commercial
+                </label>
+                <textarea class="form-control" name="strat" rows="3" placeholder="Ecrivez ici..."></textarea>
+            </div>
+            <input name="btnOb" type="submit" class="btn btn-sm btn-warning" value="Terminer">
+        </form>
+        {#<div class="row">
+            <div class="col-6"><a href="{{ path('editDeuxClient',{id:client.id}) }}" class="btn btn-sm btn-warning">Terminer</a></div>
+        </div>#}
+    {% endif %}
+
+{% endblock %}
+

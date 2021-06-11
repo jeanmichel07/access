@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <br><a class="btn btn-sm btn-primary" href="{{ path('newVendeur') }}">Nouveau Vendeur</a><hr>
+    <div class="list">
+        <table class="responsive-table">
+            <thead>
+            <tr>
+                <th>Nom</th><th>Prénom</th><th>Contact</th>
+            </tr>
+            </thead>
+            {% for c in v|reverse %}
+            <tr>
+                <td>{{ c.nom }}</td><td>{{ c.prenom }}</td><td>{{ c.contact }} </td>
+            </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3"><i>Aucune commercial</i></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

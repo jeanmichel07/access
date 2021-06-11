@@ -1,0 +1,53 @@
+{% extends 'front.html.twig' %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+    <div><br>Mes contrats électricité</div><br>
+    <div>Nb de site : {{ c.perimetreElectricites|length }}</div><hr>
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th scope="col">DDF</th>
+            <th scope="col">PDL</th>
+            <th scope="col">Nom point de livraison</th>
+            <th scope="col">Ségmentation</th>
+            <th scope="col">Conso. PTE</th>
+            <th scope="col">Conso. HPH</th>
+            <th scope="col">Conso. HCH</th>
+            <th scope="col">Conso. HPE</th>
+            <th scope="col">Conso. HCE</th>
+            <th scope="col">Conso. Total</th>
+        </tr>
+        </thead>
+
+        {% set total = 0 %}
+    {% for p in c.perimetreElectricites %}
+        <tr>
+            <td>{{ p.dateFourniture|date('d-m-y') }}</td>
+            <td>{{ p.PDL }}</td>
+            <td>{{ p.nomPtLivraison }}</td>
+            <td>{{ p.segmentation }}</td>
+            <td>{{ p.pte }}</td>
+            <td>{{ p.HPH }}</td>
+            <td>{{ p.HCH }}</td>
+            <td>{{ p.HPE }}</td>
+            <td>{{ p.HCE }}</td>
+            <td>{{ p.total }}</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: rgba(121, 121, 121, 0.5); text-align: right; color: white; font-size: 15px; font-weight: bold">Puissance => </td>
+            <td>-</td>
+            <td>{{ p.psHPH }}</td>
+            <td>{{ p.psHCH }}</td>
+            <td>{{ p.psHPE }}</td>
+            <td>{{ p.psHCE }}</td>
+            <td>-</td>
+        </tr>
+        {% set total = total + p.total %}
+    {% endfor %}
+    </table>
+    <div style="float: right; border: solid black 1px; width: 10%; padding: 12px">
+        Total : {{ total }}
+    </div>
+{% endblock %}

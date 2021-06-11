@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+        {% block stylesheets %}
+            <style>
+                h4{
+                    font-weight: bold;
+                }
+            </style>
+        {% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-chart">
+                <div class="card-body">
+                    <h4 class="card-title">NB d’opportunité électricité en attente </h4>
+                    <br>
+                    <br>
+                    <p class="card-category" style="text-align: center; font-size: 40px; font-weight: bold">
+                        <span class="text-success">{{ nbroffreelecenattente }}</span></p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-chart">
+                <div class="card-body">
+                    <h4 class="card-title">NB d’opportunité gaz en attente </h4>
+                    <br>
+                    <br>
+                    <p class="card-category"  style="text-align: center; font-size: 40px; font-weight: bold"><span class="text-success">{{ nbroffregazenattente }}</span></p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-chart">
+                <div class="card-body">
+                    <h4 class="card-title">NB de client en attente d’opportunité électricité </h4>
+                    <br>
+                    <br>
+                    <p class="card-category"  style="text-align: center; font-size: 40px; font-weight: bold"><span class="text-success">{{ nbr_client }}</span></p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-chart">
+                <div class="card-body">
+                    <h4 class="card-title">NB de client en attente d’opportunité gaz</h4>
+                    <br>
+                    <br>
+                    <p class="card-category" style="text-align: center; font-size: 40px; font-weight: bold"><span class="text-success">{{ nbr_client_gaz }}</span></p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

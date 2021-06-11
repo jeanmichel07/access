@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+        {% if offre.detailOffreElecs|length < offre.nbrOffre %}
+        {% set i = offre.detailOffreElecs|length %}
+        <h2>Opportunité {{ offre.fournisseur[i] }}</h2><br>
+    Nombre d'offre : {{ offre.detailOffreElecs|length + 1 }}/{{ offre.nbrOffre }}
+    <hr>
+        {{ form_start(form, {attr:{'class':'form-d-elec'}}) }}
+        {{ form_row(form.prAbonnementParAn) }}
+        {{ form_row(form.prPte) }}
+        <div class="row">
+            <div class="col-6">{{ form_row(form.prHPH) }}</div>
+            <div class="col-6">{{ form_row(form.prHCH) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.prHPE) }}</div>
+            <div class="col-6">{{ form_row(form.prHCE) }}</div>
+        </div>
+
+        <input style="display: none" type="text" name="fournisseur" value="{{ offre.fournisseur[i] }}">
+        <div class="row">
+            <div class="col-6">
+                <input type="submit" name="voir" class="btn btn-sm btn-block btn-primary" value="Voir les budgets">
+            </div>
+            <div class="col-6">
+                <input type="submit" class="btn btn-sm btn-block btn-warning" value="Enregistrer et passer au site suivant">
+            </div>
+        </div>
+
+        {% else %}
+        <script>
+            location.href = "/admin/new/infos-supli-{{ id }}.html"
+        </script>
+        {% endif %}
+        {{ form_end(form) }}
+    <div style="margin-top: 10px; background-color: white; border-right: 10px; padding: 10px">
+        <h3>Observation</h3>
+        <div class="row">
+            <div class="col-6">
+                <label>
+                    Budget client
+                </label>
+                <input type="text" class="form-control cible" name="cible" value="{% if cible is defined %} {{ cible.valeur }} {% endif %}">
+            </div>
+            <div class="col-6">
+                <label>
+                    Budget opportunité
+                </label>
+                <input type="text" class="form-control opportunité" name="cible" value="{% if budget is defined %} {{ budget }} {% endif %}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label style="text-transform: capitalize">
+                    écart
+                </label>
+                <input type="text" class="form-control opportunité" name="cible" value="{% if ecart is defined %} {{ ecart }} {% endif %}">
+            </div>
+        </div>
+    </div>
+        {#<a style="float: right; color: white; font-weight: bold" class="btn btn-sm btn-warning">Terminer</a>#}
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
+{% endblock %}

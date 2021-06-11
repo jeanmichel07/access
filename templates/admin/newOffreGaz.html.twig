@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Nouvelle opportunite gaz naturel</h2><hr>
+    {{ form_start(form) }}
+    <label>Nombre de fournisseur</label>
+    <input type="number" value="1" class="form-control" id="fname" name="nbrOffre" onfocusout="func()" onfocusin="fu()">
+    <label>Fournisseur 1</label>
+    <div class="form-group">
+        <input placeholder="Fornisseur 1" type="text" name="fourni1" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Durée en mois du fornisseur 1</label>
+        <input placeholder="Durée en mois" type="number" name="dure-en-mois1" class="form-control">
+    </div>
+    <div id="four">
+
+    </div>
+    <label>Profil</label>
+    <select id="profil" name="profil" class="form-control" onchange="verifi()" onfocus="test()">
+        <option value="">Choisissez un profil</option>
+        {% for p in user.permetreGazs %}
+            <option value="{{ p.profil }}">{{ p.profil }}</option>
+        {% endfor %}
+    </select><br>
+    <div id="error"></div><br>
+    <input disabled type="submit" class="btn btn-sm btn-primary" value="Créer" id="creer">
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/jquery/jquery.js"></script>
+    <script>
+        var seg = document.getElementById('profil');
+        var error = document.getElementById('error');
+        var creer = document.getElementById('creer');
+        function test() {
+            creer.setAttribute('disabled',true);
+        }
+
+        function verifi(){
+            error.innerHTML = '<p style="color: grey;"><i>Verification...</i></p>'
+            var value = seg.value;
+            var user ='{{ user.id }}';
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET',"/admin/verif/profil?profil="+value+"&client="+user);
+            xhr.onload = function () {
+                var t= JSON.parse(xhr.response);
+                if(t.taille >= 1){
+                    error.innerHTML = '<p style="color: red;"><i>Erreur: cette client a déjà une offre sur '+value+'</i></p>';
+                    creer.setAttribute('disabled',true)
+                }else{
+                    error.innerHTML = '<p style="color: green;"><i>Succès: cette client n\'a pas encore une offre sur '+value+'</i></p>';
+                    creer.removeAttribute('disabled')
+                }
+            };
+            xhr.send()
+        }
+        function func(){
+            var f = document.getElementById('four');
+            var x = $("#fname").val();
+            console.log(x);
+            for(var i = 2; i <= x; i++ )
+                f.innerHTML +=`
+                    <div class="form-group">
+                        <label>Fournisseur `+i+`</label>
+                        <input placeholder="Fornisseur `+i+`" name="fourni`+i+`" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Durée en mois du fornisseur `+i+`</label>
+                        <input placeholder="Durée en mois" type="number" name="dure-en-mois`+i+`" class="form-control">
+                    </div>
+                    `
+        }
+        function fu(){
+            var f = document.getElementById('four');
+            f.innerHTML = ''
+        }
+    </script>
+{% endblock %}

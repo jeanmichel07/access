@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h3>{{ 'Fournisseur :'~offre.fournisseur~' Segmentation : '~offre.segmentation }}</h3>
+    <div class="list">
+        <table class="table">
+            <tr class="table-light">
+                <th>Prix abonnement/an</th><th>Prix Pte</th><th>Prix HPH</th><th>Prix HCH</th><th>Prix HPE</th><th>Prix HCE</th><th>Budget HTT</th>
+            </tr>
+            {% for o in offre.detailOffreElecs|reverse %}
+                <tr>
+                    <td>{{ o.prAbonnementParAn }}</td>
+                    <td>{{ o.prPte }}</td>
+                    <td>{{ o.prHPH }}</td>
+                    <td>{{ o.prHCH }}</td>
+                    <td>{{ o.prHPE }}</td>
+                    <td>{{ o.prHCE }}</td>
+                    <td>{{ o.budgetHTT }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

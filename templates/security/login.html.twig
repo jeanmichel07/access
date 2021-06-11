@@ -1,0 +1,47 @@
+{% extends 'connexion.html.twig' %}
+{% block stylesheets %}
+    <style>
+        .form-login{
+            width: 30%;
+            padding: 10px 40px 0 ;
+            border: 1px black solid;
+            border-radius: 10px;
+        }
+        .error{
+            border-radius: 10px;
+            /*background-color: rgba(180,90,1,0.4);*/
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="form-login">
+        <img width="80%" src="/imagesSites/log.png">
+        <form  method="post" action="{{ path('app_login') }}">
+            {% if error %}
+                <div class="error" style="text-align: center;  color: red; font-weight: bold; font-size: 19px">
+                    Pseudo ou mot de passe incorrect
+                </div>
+                <br>
+            {% endif %}
+            <br>
+            <div class="form-group">
+                <input type="email" value="{{ last_username }}" placeholder="Votre adresse e-mail" name="email" id="inputEmail" class="form-control" required autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Votre mots de passe" name="password" id="inputPassword" class="form-control" required>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="form-group">
+                <input class="btn btn-sm btn-primary" type="submit" value="Se connecter">
+            </div>
+        </form>
+        <br>
+        <br>
+    </div>
+{% endblock %}

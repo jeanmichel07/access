@@ -1,0 +1,64 @@
+security:
+    encoders:
+        App\Entity\Admin:
+            algorithm: sha1
+        App\Entity\Client:
+            algorithm: sha1
+        App\Entity\Vendeur:
+            algorithm: sha1
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        admin:
+            entity:
+                class: App\Entity\Admin
+                property: email
+
+        client:
+            entity:
+                class: App\Entity\Client
+                property: email
+        vendeur:
+            entity:
+                class: App\Entity\Vendeur
+                property: email
+
+        mixt:
+            chain:
+                providers: ['admin', 'client','vendeur']
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            provider: mixt
+            logout:
+                path: app_logout
+                target: app_login
+            guard:
+                authenticators:
+                    - App\Security\AppAuthenticator
+                # where to redirect after logout
+                # target: app_any_route
+
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    # access_control:
+        # - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/confirme, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/mot-de-passe-reinitialisation, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/mot-de-passe-resultat, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/backoffice, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>La valeur de la Composante de comptage du {{ c.segmentation.nom }}</h3>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_row(form.value) }}
+    <input type="submit" class="btn btn-sm btn-primary" value="Enregistrer">
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Nouvelle opportunité éléctricité</h2><hr>
+    {{ form_start(form) }}
+{#{{ form_row(form.nbrOffre,{'attr':{'id':'fname','onfocusout':'func()'}}) }}#}
+    <label>Nombre de fournisseur</label>
+    <input type="number" value="1" class="form-control" id="fname" name="nbrOffre" onfocusout="func()" onfocusin="fu()">
+    <label>Fournisseur 1</label>
+    <div class="form-group">
+        <input type="text" name="fourni1" class="form-control">
+    </div>
+    <div id="four">
+
+    </div>
+    <label>Ségmentation</label>
+    <select name="segmentation" onchange="verifi()" class="form-control" id="seg">
+        <option value="">Choisissez la segmentation</option>
+        {% for s in user.perimetreElectricites %}
+            <option value="{{ s.segmentation }}">{{ s.segmentation }}</option>
+        {% endfor %}
+    </select><br>
+    <div id="error"></div><br>
+    <input disabled type="submit" class="btn btn-sm btn-primary" value="Créer" id="creer">
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/jquery/jquery.js"></script>
+    <script>
+        var seg = document.getElementById('seg');
+        var error = document.getElementById('error');
+        var creer = document.getElementById('creer');
+        function verifi(){
+            error.innerHTML = '<p style="color: grey;"><i>Verification...</i></p>';
+            var value = seg.value;
+            var user ='{{ user.id }}';
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET',"/admin/verif?seg="+value+"&client="+user);
+            xhr.onload = function () {
+              var t= JSON.parse(xhr.response);
+              if(t.taille === 1){
+                  error.innerHTML = '<p style="color: red;"><i>Erreur: le client a déjà reçue d\'offre en '+value+'</i></p>';
+                  creer.setAttribute('disabled',true)
+              }else{
+                  error.innerHTML = '<p style="color: green;"><i>Sucées: le client n\'a pas encore reçue d\'offre en '+value+'</i></p>';
+                  creer.removeAttribute('disabled')
+              }
+            };
+            xhr.send()
+        }
+        function func(){
+            var f = document.getElementById('four');
+            var x = $("#fname").val();
+            // console.log(x);
+            for(var i = 2; i <= x; i++ )
+            f.innerHTML +='<div class="form-group"><label>Fournisseur '+i+'</label> <input name="fourni'+i+'" class="form-control" type="text"></div>'
+        }
+        function fu(){
+            var f = document.getElementById('four');
+                f.innerHTML = ''
+        }
+    </script>
+{% endblock %}

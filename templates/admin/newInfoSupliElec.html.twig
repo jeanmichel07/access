@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        .foo{
+            width: 100%;
+            padding: 10px;
+            background-color: #80bdff;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+        .text{
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="foo">
+        <img width="25px" src="/imagesSites/27690.png"><span class="text">ELECTRICITE</span>
+    </div>
+    <hr>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-12">{{ form_row(form.cal22) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-12">{{ form_row(form.cal23) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-12">{{ form_row(form.cal24) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <input type="submit" class="btn btn-sm btn-primary" value="Terminé">
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

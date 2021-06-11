@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <br><a class="btn btn-sm btn-primary" href="{{ path('newClient') }}">Nouvelle client</a><hr>
+    <div class="list">
+        <table class="table">
+            <tr class="table-light">
+                <th>Raison social</th><th>Prénom</th><th>Fonction</th>
+            </tr>
+            {% for c in client|reverse %}
+                <tr class="table-hover">
+                    <td>{{ c.raisonSocial }}</td><td>{{ c.prenomSignataire }}</td><td>{{ c.fonctionSignataire }}</td>
+                    <td><a href="{{ path('detailleClient', {id:c.id}) }}" class="btn btn-sm btn-info">Voir</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

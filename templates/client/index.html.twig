@@ -1,0 +1,72 @@
+{% extends 'front.html.twig' %}
+{% block body %}
+    <div><br><b style="text-transform: uppercase">{{ client.raisonSocial }}</b></div>
+    <br>
+    <div class="row">
+        <div class="col-4" style="text-align: center"><a href="#"><img width="15%" src="/imagesSites/homeIcon.jpg"></a></div>
+        <div class="col-4" style="padding-left: 30px">
+            Mes périmètres : <ul>
+                <li><a href="{{ path('perimetreGaz') }}">Mon périmètres GAZ</a></li>
+                <li><a href="{{ path('perimetreElec') }}">Mon périmètres électricité</a></li>
+            </ul>
+        </div>
+        {#<div class="col-4">
+            Mes notifications : <img width="10%" src="/imagesSites/notif.png">
+        </div>#}
+    </div>
+        <h3>Opportunité éléctricité</h3>
+        <div>
+        </div>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>Nombre de fournisseur</th>
+                <th>Date de création</th>
+                <th>Segmentation</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+        </thead>
+            {% for e in elec %}
+                <tr>
+                    <td>{{ e.nbrOffre }}</td>
+                    <td>{{ e.createdAt|date('d-m-y') }}</td>
+                    <td>{{ e.segmentation }}</td>
+                    <td>{{ e.status }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="{{ path('detailhistoriqueclient',{id:e.id}) }}">Voir</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5"><i>Vous n'avez pas encore d'opportunité éléctricité</i></td>
+                </tr>
+            {% endfor %}
+        </table><hr>
+        <h3>Opportunité Gaz naturel</h3>
+        <div>
+        </div>
+    <table class="responsive-table">
+        <thead>
+        <tr>
+                <th>Nombre de fournisseur</th>
+                <th>Date de création</th>
+                <th>Profil</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+        </thead>
+            {% for e in gaz %}
+                <tr>
+                    <td>{{ e.nbrOffre }}</td>
+                    <td>{{ e.createdAt|date('d-m-y') }}</td>
+                    <td>{{ e.profil }}</td>
+                    <td>{{ e.status }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{{ path('detailhistoriquegazclient',{id:e.id}) }}">Voir</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5"><i>Vous n'avez pas encore d'opportunité Gaz naturel</i></td>
+                </tr>
+            {% endfor %}
+        </table>
+{% endblock %}

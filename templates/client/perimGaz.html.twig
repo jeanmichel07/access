@@ -1,0 +1,32 @@
+{% extends 'front.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+    <div><br>Mes contrats gaz</div><br>
+    <div>Nb de site : {{ c.permetreGazs|length }}</div><hr>
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th scope="col">PCE</th>
+            <th scope="col">D.D.F</th>
+            <th scope="col">CAR</th>
+            <th scope="col">STATUT</th>
+            <th scope="col">VOLUME</th>
+        </tr>
+        </thead>
+        {% set total = 0 %}
+        {% for el in c.permetreGazs %}
+            <tr>
+                <td>{{ el.PCE }}</td>
+                <td>{{ el.dateFourniture|date('d/m/Y') }}</td>
+                <td>{{ el.CAR }}</td>
+                <td>{{ el.statut }}</td>
+                <td></td>
+            </tr>
+            {% set total = total + el.CAR %}
+        {% endfor %}
+    </table>
+    <div style="float: right; border: solid black 1px; width: 10%; padding: 12px">
+        Total : {{total}}
+    </div>
+{% endblock %}
