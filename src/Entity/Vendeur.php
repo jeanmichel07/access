@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=VendeurRepository::class)
- * @UniqueEntity("email")
  */
 class Vendeur implements UserInterface
 {
@@ -64,7 +63,7 @@ class Vendeur implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 

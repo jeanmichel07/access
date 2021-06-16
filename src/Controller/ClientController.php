@@ -7,6 +7,7 @@ use App\Entity\DetailleOffreGaz;
 use App\Entity\DetailOffreElec;
 use App\Entity\OffreElectricite;
 use App\Entity\OffreGaz;
+use App\Form\PassClientType;
 use App\Repository\InfoSuplementaireElecRepository;
 use App\Repository\InfoSuplementaireGazRepository;
 use App\Repository\ObjectifRepository;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class ClientController
@@ -238,5 +240,23 @@ class ClientController extends AbstractController
 
         return $this->redirectToRoute('detailhistoriquegazclient',['id'=>$detailleOffreGaz->getOffre()->getId()]);
     }
+    /**
+     * @Route("/edit.password.{id}", name="editPassword_client")
+     */
+    public function EditPassword(Client $client, UserPasswordEncoderInterface $encoder, Request $request){
+        $form = $this->createForm(PassClientType::class, $client);
+        $form->handleRequest($request);
 
+        if($form->isSubmitted() and $form->isValid()){
+            $password = $encoder->encodePassword($client, $client->getPassword());
+            $client->setPassword($password);
+            $this->em->persist($client);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Votre mots de passe est bien modifié ');
+        }
+        return $this->render('client/password.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
 }
