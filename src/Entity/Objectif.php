@@ -28,7 +28,7 @@ class Objectif
     private $perimetre;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $valeur;
 

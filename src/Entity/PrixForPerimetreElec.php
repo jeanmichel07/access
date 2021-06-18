@@ -18,47 +18,47 @@ class PrixForPerimetreElec
     private $id;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $compComptage;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $compGestion;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $partFixe;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $partVariable;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $totalHT;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $cspe;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $cta;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $tcfe;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $totalHTVA;
 
@@ -68,7 +68,7 @@ class PrixForPerimetreElec
     private $PerimetreElectricite;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $budgetHTT;
 

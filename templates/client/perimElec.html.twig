@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <td colspan="4" style="background-color: rgba(121, 121, 121, 0.5); text-align: right; color: white; font-size: 15px; font-weight: bold">Puissance => </td>
-            <td>-</td>
+            <td>{{ p.psPte }}</td>
             <td>{{ p.psHPH }}</td>
             <td>{{ p.psHCH }}</td>
             <td>{{ p.psHPE }}</td>
@@ -45,6 +45,10 @@
             <td>-</td>
         </tr>
         {% set total = total + p.total %}
+    {% else %}
+        <tr>
+            <td colspan="10"><i>Vous n'avez pas du périmètre éléctricité</i></td>
+        </tr>
     {% endfor %}
     </table>
     <div style="float: right; border: solid black 1px; width: 10%; padding: 12px">

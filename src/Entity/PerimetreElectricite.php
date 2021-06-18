@@ -39,32 +39,32 @@ class PerimetreElectricite
 
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $pte;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $HPH;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $HCH;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $HPE;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $HCE;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $total;
 
@@ -89,22 +89,22 @@ class PerimetreElectricite
     private $seg;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $psHPH;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $psHCH;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $psHPE;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $psHCE;
 

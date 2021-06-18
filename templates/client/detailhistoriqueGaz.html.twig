@@ -39,7 +39,7 @@
                     <p><b>Statut :</b> <i style="font-weight: bold">Offre decliné</i></p>
                 {% else %}
                 <a href="{{ path('validereGaz',{id:d.id}) }}" class="btn btn-sm btn-primary">Accepter</a>
-                <a href="{{ path('declineGaz',{id:d.id}) }}" class="btn btn-sm btn-secondary">Decliner</a><hr>
+                <a href="{{ path('declineGaz',{id:d.id}) }}" class="btn btn-sm btn-warning">Decliner</a><hr>
                 {% endif %}
             {% endfor %}
         </div>

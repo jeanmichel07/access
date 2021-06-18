@@ -24,6 +24,10 @@
                 <td></td>
             </tr>
             {% set total = total + el.CAR %}
+        {% else %}
+            <tr>
+                <td colspan="5"><i>Vous n'avez pas du périmètre gaz naturel</i></td>
+            </tr>
         {% endfor %}
     </table>
     <div style="float: right; border: solid black 1px; width: 10%; padding: 12px">

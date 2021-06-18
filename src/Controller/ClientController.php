@@ -118,7 +118,7 @@ class ClientController extends AbstractController
         $nbrAccepted = $offreele->getNbrAccepted() + 1;
         $purcentage =($nbrAccepted * 100)/$offreele->getNbrOffre();
         $offreele->setNbrAccepted($nbrAccepted)
-            ->setStatus('Offre accpetée à '.$purcentage.'%');
+            ->setStatus('Offre accpetée');
         $this->em->persist($offreele);
 
         $perimetre = $repository->findByPerimElec($client, $segmantation);
@@ -126,7 +126,7 @@ class ClientController extends AbstractController
             $p->setStatut('Finalisé');
             $this->em->persist($p);
         }
-        $client->setStatut('Finalisé à '.$purcentage.'%');
+        $client->setStatut('Finalisé');
 
         $this->em->persist($client);
 
@@ -160,10 +160,10 @@ class ClientController extends AbstractController
         $nbrAccepted = $offreGaz->getNbrAccepted() + 1;
         $purcentage =($nbrAccepted * 100)/$offreGaz->getNbrOffre();
         $offreGaz->setNbrAccepted($nbrAccepted)
-            ->setStatus('Offre accpetée à '.$purcentage.'%');
+            ->setStatus('Offre accpetée');
         $this->em->persist($offreGaz);
 
-        $client->setStatut('Finalisé à '.$purcentage.'%');
+        $client->setStatut('Finalisé');
 
         $this->em->persist($client);
         $this->em->flush();
@@ -188,7 +188,7 @@ class ClientController extends AbstractController
         $nbrDeclined = $offreele->getNbrDeclined() + 1;
         $purcentage =($nbrDeclined * 100)/$offreele->getNbrOffre();
         $offreele->setNbrDeclined($nbrDeclined)
-            ->setStatus('Offre déclinée à '.$purcentage.'%');
+            ->setStatus('Offre déclinée');
         $this->em->persist($offreele);
 
         $perimetre = $repository->findByPerimElec($client, $segmantation);
@@ -196,7 +196,7 @@ class ClientController extends AbstractController
             $p->setStatut('Décliné');
             $this->em->persist($p);
         }
-        $client->setStatut('Déclinée à '.$purcentage.'%');
+        $client->setStatut('Déclinée');
 
         $this->em->persist($client);
 
@@ -230,10 +230,10 @@ class ClientController extends AbstractController
         $nbrDecliné = $offreGaz->getNbrDeclined() + 1;
         $purcentage =($nbrDecliné * 100)/$offreGaz->getNbrOffre();
         $offreGaz->setNbrAccepted($nbrDecliné)
-            ->setStatus('Offre Decliné à '.$purcentage.'%');
+            ->setStatus('Offre Decliné');
         $this->em->persist($offreGaz);
 
-        $client->setStatut('Decliné à '.$purcentage.'%');
+        $client->setStatut('Decliné');
 
         $this->em->persist($client);
         $this->em->flush();

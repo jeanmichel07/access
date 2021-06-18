@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
@@ -33,15 +34,34 @@ class UserController extends AbstractController
      * @Route("/admin/edit-user/{id}.html", name="editUser")
      * @param Client $client
      * @param Request $request
+     * @param \Swift_Mailer $mailer
      * @return Response
      */
-    public function index(Client $client, Request $request): Response{
+    public function index(Client $client, Request $request,\Swift_Mailer $mailer): Response{
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
         if($form->isSubmitted() and $form->isValid()){
             $this->em->persist($client);
             $this->em->flush();
-            return $this->redirectToRoute('listeclient');
+            $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
+            $url_active = $this->generateUrl('active',['email'=> AppManager::encrypt($client->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
+            $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
+                ->setFrom('miranga.test@gmail.com')
+                ->setTo($client->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'admin/emailClient.html.twig',[
+                            'email'=> $client->getEmail(),
+                            'url'=>$url,
+                            'nom'=>$client->getNomSignataire(),
+                            'prenom'=>$client->getPrenomSignataire(),
+                            'urlActive' => $url_active
+                        ]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+            //return $this->redirectToRoute('sendemailclient', ['id'=>$client->getId()]);
         }
         return $this->render('user/editUser.html.twig',[
             'form' => $form->createView()

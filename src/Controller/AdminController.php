@@ -214,7 +214,7 @@ class AdminController extends AbstractController
             };
             $client
                 ->setVendeur($vend)
-                ->setStatut('En cour 100%')->setState(false)->setType(1);
+                ->setStatut('En cour')->setState(false)->setType(1);
             $this->em->persist($client);
             $this->em->flush();
             if(isset($_POST['elec']))
@@ -561,7 +561,7 @@ class AdminController extends AbstractController
         $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
         $url_active = $this->generateUrl('active',['email'=> AppManager::encrypt($client->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
         $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-            ->setFrom('h.diakite@accessenergies.fr')
+            ->setFrom('miranga.test@gmail.com')
             ->setTo($client->getEmail())
             ->setBody(
                 $this->renderView(
@@ -635,7 +635,7 @@ class AdminController extends AbstractController
         $url_active = $this->generateUrl('activeVendeur',['email'=> AppManager::encrypt($vendeur->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-            ->setFrom('h.diakite@accessenergies.fr')
+            ->setFrom('miranga.test@gmail.com')
             ->setTo($vendeur->getEmail())
             ->setBody(
                 $this->renderView(
