@@ -267,7 +267,7 @@
 {% if app.user %}
     <div class="wrapper ">
         <div class="sidebar" data-color="purple" data-background-color="white" data-image="/assets/img/sidebar-1.jpg">
-            <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            <div class="logo"><a href="{{ path('client') }}" class="simple-text logo-normal">
                     <img width="175px" src="/imagesSites/log.png">
                 </a></div>
             <div class="sidebar-wrapper">
@@ -285,7 +285,7 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{{ path('historiqueD') }}">
                             <i class="material-icons">list</i>
                             <p>Historique</p>
                         </a>

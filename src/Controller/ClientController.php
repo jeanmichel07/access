@@ -52,6 +52,21 @@ class ClientController extends AbstractController
         ]);
     }
     /**
+     * @Route("/historique.html", name="historiqueD")
+     */
+    public function historique(OffreElectriciteRepository $repository, OffreGazRepository $gazRepository): Response
+    {
+        $client = $this->getUser();
+        $elec = $repository->findAlls($client);
+        $gaz = $gazRepository->findAlls($client);
+        return $this->render('client/historique.html.twig',[
+            'elec'=>$elec,
+            'gaz'=>$gaz,
+            'client'=>$client
+        ]);
+    }
+
+    /**
      * @Route("/perimetre-electricite.html", name="perimetreElec")
      */
     public function showPerimElec(){
@@ -80,7 +95,7 @@ class ClientController extends AbstractController
         $infoSupliElec = $repository->findByOffreElec($offreElectricite);
         return $this->render('client/detailhistorique.html.twig',[
             'elec'=>$offreElectricite,
-            'info'=>$infoSupliElec[0],
+            'info'=>$infoSupliElec[0] != null ? $infoSupliElec[0] : [0],
             'objectif'=>$objectifElec
         ]);
     }
@@ -96,7 +111,7 @@ class ClientController extends AbstractController
         $objectifGaz = $objectif->getValeur();
         return $this->render('client/detailhistoriqueGaz.html.twig',[
             'gaz'=>$offreGaz,
-            'info'=>$infoSupliElec[0],
+            'info'=>$infoSupliElec[0] != null ? $infoSupliElec[0] : [0],
             'objectif'=>$objectifGaz
         ]);
     }

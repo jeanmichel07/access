@@ -8,7 +8,10 @@
     <hr>
         {{ form_start(form, {attr:{'class':'form-d-elec'}}) }}
         {{ form_row(form.prAbonnementParAn) }}
-        {{ form_row(form.prPte) }}
+            <div class="row">
+                <div class="col-6">{{ form_row(form.prPte) }}</div>
+                <div class="col-6">{{ form_row(form.dure_en_mois) }}</div>
+            </div>
         <div class="row">
             <div class="col-6">{{ form_row(form.prHPH) }}</div>
             <div class="col-6">{{ form_row(form.prHCH) }}</div>

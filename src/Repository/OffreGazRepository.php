@@ -24,7 +24,16 @@ class OffreGazRepository extends ServiceEntityRepository
             ->andWhere('o.client = :client')
             ->setParameter('client', $client)
             ->orderBy('o.id', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findAlls($client){
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('o.id', 'DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -34,8 +43,10 @@ class OffreGazRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->where('o.profil = :profil')
             ->andWhere('o.client = :client')
+            ->andWhere('o.status = :status')
             ->setParameter('profil', $profil)
             ->setParameter('client', $client)
+            ->setParameter('status', 'En attent')
             ->getQuery()
             ->getResult()
             ;

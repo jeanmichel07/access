@@ -1,7 +1,7 @@
 swiftmailer:
     transport: smtp
-    username: 2e7cd8ccecd400ca389bf3845d23eb27
-    password: b029a74482acc1b5eec682a289ccb240
+    username: 42271d6fe5e32f29719e16b3f3ea980d
+    password: bcd8b6ac14d28e77e0bef36107acf8b5
     host: in-v3.mailjet.com
     port: '587'
     encryption: tls

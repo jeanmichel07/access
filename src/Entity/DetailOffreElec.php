@@ -77,6 +77,11 @@ class DetailOffreElec
      */
     private $totalHTVA;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $dure_en_mois;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -222,6 +227,18 @@ class DetailOffreElec
     public function setTotalHTVA(float $totalHTVA): self
     {
         $this->totalHTVA = $totalHTVA;
+
+        return $this;
+    }
+
+    public function getDureEnMois(): ?string
+    {
+        return $this->dure_en_mois;
+    }
+
+    public function setDureEnMois(?string $dure_en_mois): self
+    {
+        $this->dure_en_mois = $dure_en_mois;
 
         return $this;
     }

@@ -46,7 +46,7 @@ class UserController extends AbstractController
             $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
             $url_active = $this->generateUrl('active',['email'=> AppManager::encrypt($client->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
             $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-                ->setFrom('miranga.test@gmail.com')
+                ->setFrom('h.diakite@accessenergies.fr')
                 ->setTo($client->getEmail())
                 ->setBody(
                     $this->renderView(

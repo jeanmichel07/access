@@ -46,6 +46,7 @@
                         {% set res = objectif - d.totalHTVA %}
                         <b>Ecart par rapport à budget cible du client : </b> <span>  {{ res }}&euro; </span>
                     {% endif %}
+                        <p><b>Durées :</b><i>{{ d.dureEnMois }} mois</i></p>
                 </span>
                         {% if d.statut == 'accepte' %}
                             <p><b>Statut :</b> <i style="font-weight: bold">Offre accepté</i></p>
@@ -54,6 +55,7 @@
                         {% else%}
                             <p><b>Statut :</b> <i style="font-weight: bold">En attent</i></p>
                         {% endif %}
+
                 </div>
                 {#<div class="col-4" style="margin-top: 40px">
                     <table class="table">
@@ -81,5 +83,5 @@
                 </div>
 
     <br>
-    <a href="javascript:history.back();" class="btn btn-sm btn-warning">Retour</a>
+    <a href="{{ path('listeclient') }}" class="btn btn-sm btn-warning">Retour</a>
 {% endblock %}

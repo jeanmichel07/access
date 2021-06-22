@@ -438,8 +438,8 @@ class AdminController extends AbstractController
      * @Route("/historique-{id}.html", name = "historique")
      */
     public function historique(OffreElectriciteRepository $repository, Client $client, OffreGazRepository $gazRepository){
-        $elec = $repository->findFive($client);
-        $gaz = $gazRepository->findFive($client);
+        $elec = $repository->findAlls($client);
+        $gaz = $gazRepository->findAlls($client);
 
         for($i = 0; $i < sizeof($client->getPerimetreElectricites()); $i++){
             if($elec)
@@ -466,12 +466,15 @@ class AdminController extends AbstractController
         $infoSupliElec = $repository->findByOffreElec($offreElectricite);
        return $this->render('admin/detailhistorique.html.twig',[
             'elec'=>$offreElectricite,
-            'info'=>$infoSupliElec[0],
+            'info'=> $infoSupliElec[0] != null ? $infoSupliElec[0]: [],
             'objectif'=>$objectifElec
         ]);
     }
+
     /**
-     * @param OffreElectricite $offreElectricite
+     * @param OffreGaz $offreGaz
+     * @param InfoSuplementaireGazRepository $repository
+     * @param ObjectifRepository $objectifRepository
      * @return Response
      * @Route("/historique/detailgaz-{id}.html", name = "detailhistoriquegaz")
      */
@@ -481,7 +484,7 @@ class AdminController extends AbstractController
         $infoSupliElec = $repository->findByOffreGaz($offreGaz);
         return $this->render('admin/detailhistoriqueGaz.html.twig',[
             'gaz'=>$offreGaz,
-            'info'=>$infoSupliElec[0],
+            'info'=> $infoSupliElec[0] != null ? $infoSupliElec[0] : [],
             'objectif'=>$objectifGaz
         ]);
     }
@@ -561,7 +564,7 @@ class AdminController extends AbstractController
         $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
         $url_active = $this->generateUrl('active',['email'=> AppManager::encrypt($client->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
         $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-            ->setFrom('miranga.test@gmail.com')
+            ->setFrom('h.diakite@accessenergies.fr')
             ->setTo($client->getEmail())
             ->setBody(
                 $this->renderView(
@@ -635,7 +638,7 @@ class AdminController extends AbstractController
         $url_active = $this->generateUrl('activeVendeur',['email'=> AppManager::encrypt($vendeur->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-            ->setFrom('miranga.test@gmail.com')
+            ->setFrom('h.diakite@accessenergies.fr')
             ->setTo($vendeur->getEmail())
             ->setBody(
                 $this->renderView(
@@ -739,6 +742,7 @@ class AdminController extends AbstractController
         $form = $this->createFormBuilder($detailOffreElec)
             ->add('prAbonnementParAn', NumberType::class,['label'=>'Prix d\'abonnement par an'])
             ->add('prPte', NumberType::class,['label'=>'Prix Pte'])
+            ->add('dure_en_mois', TextType::class,['label'=>'Durée en mois'])
             ->add('prHPH', NumberType::class,['label'=>'Prix HPH'])
             ->add('prHCH', NumberType::class,['label'=>'Prix HPC'])
             ->add('prHPE', NumberType::class,['label'=>'Prix HPE'])

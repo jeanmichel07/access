@@ -24,48 +24,34 @@ class OffreElectriciteRepository extends ServiceEntityRepository
             ->andWhere('o.client = :client')
             ->setParameter('client', $client)
             ->orderBy('o.id', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult()
             ;
     }
+
+    public function findAlls($client)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.client = :client')
+            ->setParameter('client', $client)
+            ->orderBy('o.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function findBySegmentation($segmentation, $client)
     {
         return $this->createQueryBuilder('o')
             ->where('o.segmentation = :segmentation')
             ->andWhere('o.client = :client')
+            ->andWhere('o.status = :status')
             ->setParameter('segmentation', $segmentation)
             ->setParameter('client', $client)
+            ->setParameter('status', 'En attent')
             ->getQuery()
             ->getResult()
             ;
     }
-    // /**
-    //  * @return OffreElectricite[] Returns an array of OffreElectricite objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?OffreElectricite
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
