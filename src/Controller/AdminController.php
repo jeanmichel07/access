@@ -981,8 +981,6 @@ class AdminController extends AbstractController
                 ->setDureEnMois($_POST['dureEnMois'])
                 ->setCta($infos['cta'])
                 ->setStatut('created');
-            $this->em->persist($detailleoffreGaz);
-            $this->em->flush();
 
             $budget = new BudgetGaz();
             $budget->setAbonnementParAn($infos['prAbonnParMois']*12)
@@ -1008,11 +1006,13 @@ class AdminController extends AbstractController
             $budget->setTotalsurladureducontratenTTC($c);
             $budgetCible = $objectifRepository->findBy(['user'=>$detailleoffreGaz->getOffre()->getClient(), 'perimetre'=>'gaz']);
             $cible = $budgetCible[sizeof($budgetCible) - 1];
+
             $voir = $request->get('voir');
             if(isset($voir)){
 
             }else{
                 $this->em->persist($detailleoffreGaz);
+                $this->em->persist($budget);
                 $this->em->flush();
                 return $this->redirectToRoute('detailleOffreGaz',['id'=>$offreGaz->getId()]);
             }

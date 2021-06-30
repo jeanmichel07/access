@@ -13,8 +13,9 @@ class VendeurController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('vendeur/index.html.twig', [
-            'controller_name' => 'VendeurController',
+        $client = $this->getUser()->getClients();
+        return $this->render('vendeur/index.html.twig',[
+            'client'=>$client
         ]);
     }
 }

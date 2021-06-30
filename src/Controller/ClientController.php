@@ -107,11 +107,12 @@ class ClientController extends AbstractController
      */
     public function detailHistoriqueGaz(OffreGaz $offreGaz, InfoSuplementaireGazRepository $repository, ObjectifRepository $objectifRepository){
         $infoSupliElec = $repository->findByOffreGaz($offreGaz);
+
         $objectif = $objectifRepository->findObjectElec($offreGaz->getClient(), 'gaz');
         $objectifGaz = $objectif->getValeur();
         return $this->render('client/detailhistoriqueGaz.html.twig',[
             'gaz'=>$offreGaz,
-            'info'=>$infoSupliElec[0] != null ? $infoSupliElec[0] : [0],
+            'info'=>$infoSupliElec[0],
             'objectif'=>$objectifGaz
         ]);
     }
