@@ -31,6 +31,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ClientController extends AbstractController
 {
     private $em;
+    const EMAIl = 'h.diakite@accessenergies.fr';
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -122,32 +123,36 @@ class ClientController extends AbstractController
      * @param DetailOffreElec $detailOffreElec
      * @return RedirectResponse
      */
-    public function validerElec(DetailOffreElec $detailOffreElec, PerimetreElectriciteRepository $repository){
+    public function validerElec(\Swift_Mailer $mailer ,DetailOffreElec $detailOffreElec, PerimetreElectriciteRepository $repository, Request $request){
+        $contenu = $request->get('ac-raison');
         $detailOffreElec->setStatut('accepte');
         $this->em->persist($detailOffreElec);
-
         $offreele = $detailOffreElec->getOffre();
         $client = $offreele->getClient();
-
         $segmantation = $offreele->getSegmentation();
-
         $nbrAccepted = $offreele->getNbrAccepted() + 1;
         $purcentage =($nbrAccepted * 100)/$offreele->getNbrOffre();
         $offreele->setNbrAccepted($nbrAccepted)
             ->setStatus('Offre accpetée');
         $this->em->persist($offreele);
-
         $perimetre = $repository->findByPerimElec($client, $segmantation);
         foreach ($perimetre as $p){
             $p->setStatut('Finalisé');
             $this->em->persist($p);
         }
         $client->setStatut('Finalisé');
-
         $this->em->persist($client);
-
         $this->em->flush();
-
+        $message = (new \Swift_Message('Offre éléctricité accepté'))
+            ->setFrom($client->getEmail())
+            ->setTo(self::EMAIl)
+            ->setBody(
+                $this->renderView(
+                    'emails/refus.html.twig',[
+                    'c' => $contenu,
+                ]), 'text/html'
+            );
+        $mailer->send($message);
         return $this->redirectToRoute('detailhistoriqueclient',['id'=>$detailOffreElec->getOffre()->getId()]);
     }
 
@@ -157,32 +162,37 @@ class ClientController extends AbstractController
      * @param PermetreGazRepository $repository
      * @return RedirectResponse
      */
-    public function validerGaz(DetailleOffreGaz $detailleOffreGaz, PermetreGazRepository $repository){
+    public function validerGaz(\Swift_Mailer $mailer, DetailleOffreGaz $detailleOffreGaz, PermetreGazRepository $repository, Request $request){
+        $contenu = $request->get('ac-raison');
         $detailleOffreGaz->setStatut('accepte');
         $this->em->persist($detailleOffreGaz);
-
         $offreGaz = $detailleOffreGaz->getOffre();
         $client = $offreGaz->getClient();
-
         $profil = $offreGaz->getProfil();
-
         $perimetre = $repository->findByPerimGaz($client, $profil);
-
         foreach ($perimetre as $p){
             $p->setStatut('Finalisé');
             $this->em->persist($p);
         }
-
         $nbrAccepted = $offreGaz->getNbrAccepted() + 1;
-        $purcentage =($nbrAccepted * 100)/$offreGaz->getNbrOffre();
+        $purcentage = ($nbrAccepted * 100)/$offreGaz->getNbrOffre();
         $offreGaz->setNbrAccepted($nbrAccepted)
             ->setStatus('Offre accpetée');
         $this->em->persist($offreGaz);
-
         $client->setStatut('Finalisé');
-
         $this->em->persist($client);
         $this->em->flush();
+
+        $message = (new \Swift_Message('Offre gaz accepté'))
+            ->setFrom($client->getEmail())
+            ->setTo(self::EMAIl)
+            ->setBody(
+                $this->renderView(
+                    'emails/refus.html.twig',[
+                    'c' => $contenu,
+                ]), 'text/html'
+            );
+        $mailer->send($message);
 
         return $this->redirectToRoute('detailhistoriquegazclient',['id'=>$detailleOffreGaz->getOffre()->getId()]);
     }
@@ -192,31 +202,36 @@ class ClientController extends AbstractController
      * @param DetailOffreElec $detailOffreElec
      * @return RedirectResponse
      */
-    public function DeclineElec(DetailOffreElec $detailOffreElec, PerimetreElectriciteRepository $repository){
+    public function DeclineElec(\Swift_Mailer $mailer, DetailOffreElec $detailOffreElec, PerimetreElectriciteRepository $repository, Request $request){
+        $contenu = $request->get('dec-raison');
         $detailOffreElec->setStatut('decline');
         $this->em->persist($detailOffreElec);
-
         $offreele = $detailOffreElec->getOffre();
         $client = $offreele->getClient();
-
         $segmantation = $offreele->getSegmentation();
-
         $nbrDeclined = $offreele->getNbrDeclined() + 1;
         $purcentage =($nbrDeclined * 100)/$offreele->getNbrOffre();
         $offreele->setNbrDeclined($nbrDeclined)
             ->setStatus('Offre déclinée');
         $this->em->persist($offreele);
-
         $perimetre = $repository->findByPerimElec($client, $segmantation);
         foreach ($perimetre as $p){
             $p->setStatut('Décliné');
             $this->em->persist($p);
         }
         $client->setStatut('Déclinée');
-
         $this->em->persist($client);
-
         $this->em->flush();
+        $message = (new \Swift_Message('Offre éléctricité décliné'))
+            ->setFrom($client->getEmail())
+            ->setTo(self::EMAIl)
+            ->setBody(
+                $this->renderView(
+                    'emails/refus.html.twig',[
+                    'c' => $contenu,
+                ]), 'text/html'
+            );
+        $mailer->send($message);
 
         return $this->redirectToRoute('detailhistoriqueclient',['id'=>$detailOffreElec->getOffre()->getId()]);
     }
@@ -227,32 +242,38 @@ class ClientController extends AbstractController
      * @param PermetreGazRepository $repository
      * @return RedirectResponse
      */
-    public function declineGaz(DetailleOffreGaz $detailleOffreGaz, PermetreGazRepository $repository){
+    public function declineGaz(\Swift_Mailer $mailer,DetailleOffreGaz $detailleOffreGaz, PermetreGazRepository $repository, Request $request){
+        $contenu = $request->get('dec-raison');
+
         $detailleOffreGaz->setStatut('decline');
         $this->em->persist($detailleOffreGaz);
-
         $offreGaz = $detailleOffreGaz->getOffre();
         $client = $offreGaz->getClient();
-
         $profil = $offreGaz->getProfil();
-
         $perimetre = $repository->findByPerimGaz($client, $profil);
-
         foreach ($perimetre as $p){
             $p->setStatut('Decliné');
             $this->em->persist($p);
         }
-
         $nbrDecliné = $offreGaz->getNbrDeclined() + 1;
         $purcentage =($nbrDecliné * 100)/$offreGaz->getNbrOffre();
         $offreGaz->setNbrAccepted($nbrDecliné)
             ->setStatus('Offre Decliné');
         $this->em->persist($offreGaz);
-
         $client->setStatut('Decliné');
-
         $this->em->persist($client);
         $this->em->flush();
+
+        $message = (new \Swift_Message('Offre gaz decliné'))
+            ->setFrom($client->getEmail())
+            ->setTo(self::EMAIl)
+            ->setBody(
+                $this->renderView(
+                    'emails/refus.html.twig',[
+                    'c' => $contenu,
+                ]), 'text/html'
+            );
+        $mailer->send($message);
 
         return $this->redirectToRoute('detailhistoriquegazclient',['id'=>$detailleOffreGaz->getOffre()->getId()]);
     }

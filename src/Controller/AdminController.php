@@ -65,6 +65,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class AdminController extends AbstractController
 {
     private $em;
+    const EMAIl = 'h.diakite@accessenergies.fr';
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -564,7 +565,7 @@ class AdminController extends AbstractController
         $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
         $url_active = $this->generateUrl('active',['email'=> AppManager::encrypt($client->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
         $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-            ->setFrom('h.diakite@accessenergies.fr')
+            ->setFrom(self::EMAIl)
             ->setTo($client->getEmail())
             ->setBody(
                 $this->renderView(
@@ -638,7 +639,7 @@ class AdminController extends AbstractController
         $url_active = $this->generateUrl('activeVendeur',['email'=> AppManager::encrypt($vendeur->getEmail())], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = (new \Swift_Message('Activation plateforme d’achat d’Energie '))
-            ->setFrom('h.diakite@accessenergies.fr')
+            ->setFrom(self::EMAIl)
             ->setTo($vendeur->getEmail())
             ->setBody(
                 $this->renderView(
@@ -812,7 +813,9 @@ class AdminController extends AbstractController
      * @Route("/new/infos-supli-{id}.html", name="newInfoSupliElec")
      * @return Response
      */
-    public function addInfoSupliElec(OffreElectricite $offreElectricite, Request $request){
+    public function addInfoSupliElec(\Swift_Mailer $mailer,OffreElectricite $offreElectricite, Request $request){
+        $client = $offreElectricite->getClient();
+
         $infoSupli = new InfoSuplementaireElec();
         $form = $this->createFormBuilder($infoSupli)
             ->add('cal24',TextType::class,[
@@ -833,6 +836,19 @@ class AdminController extends AbstractController
                 ->setOffreElec($offreElectricite);
             $this->em->persist($infoSupli);
             $this->em->flush();
+            $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
+            $message = (new \Swift_Message('Recommandation d’achat Etarget'))
+                ->setFrom(self::EMAIl)
+                ->setTo($client->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'emails/offre.html.twig',[
+                            'c' => $client,
+                            'url' => $url
+                    ]), 'text/html'
+                );
+            $mailer->send($message);
+
             return $this->redirectToRoute('historique',['id'=>$offreElectricite->getClient()->getId()]);
         }
         return $this->render('admin/newInfoSupliElec.html.twig',[
@@ -846,7 +862,8 @@ class AdminController extends AbstractController
      * @return Response
      * @Route("/new/infos-supli/gaz-{id}.html", name="newInfoSupliGaz")
      */
-    public function addInfoSupliGaz(OffreGaz $offreGaz, Request $request){
+    public function addInfoSupliGaz(\Swift_Mailer $mailer,OffreGaz $offreGaz, Request $request){
+        $client = $offreGaz->getClient();
         $infoSupliGaz = new InfoSuplementaireGaz();
         $form = $this->createFormBuilder($infoSupliGaz)
             ->add('cal24',TextType::class,[
@@ -867,13 +884,25 @@ class AdminController extends AbstractController
                 ->setOffreGaz($offreGaz);
             $this->em->persist($infoSupliGaz);
             $this->em->flush();
+            $url = $this->generateUrl('home',[], UrlGeneratorInterface::ABSOLUTE_URL);
+            $message = (new \Swift_Message('Recommandation d’achat Etarget'))
+                ->setFrom(self::EMAIl)
+                ->setTo($client->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'emails/offre.html.twig',[
+                            'c' => $client,
+                            'url' => $url
+                    ]), 'text/html'
+                );
+            $mailer->send($message);
+
             return $this->redirectToRoute('historique',['id'=>$offreGaz->getClient()->getId()]);
         }
         return $this->render('admin/newInfoSupliGaz.html.twig',[
             'form'=>$form->createView()
         ]);
     }
-
     /**
      * @param Client $client
      * @return Response
